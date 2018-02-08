@@ -1,8 +1,8 @@
+#include <X11/Xatom.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/Xfixes.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <X11/extensions/Xfixes.h>
 
 int main(void) {
     Display *disp;
@@ -24,6 +24,5 @@ int main(void) {
     XFixesSelectSelectionInput(disp, root, clip, XFixesSetSelectionOwnerNotifyMask);
 
     XNextEvent(disp, &evt);
-
-    return 0;
+    XCloseDisplay(disp);
 }
