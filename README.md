@@ -13,7 +13,7 @@ Here's how it's intended to be used:
     done
 
 clipnotify doesn't try to print anything about the contents of the selection,
-it just exists when it changes. This is intentional -- X11's selection API is
+it just exits when it changes. This is intentional -- X11's selection API is
 verging on the insane, and there are plenty of others who have already lost
 their sanity to bring us xclip/xsel/etc. Use one of those tools to complement
 clipnotify.
