@@ -7,9 +7,8 @@ avoid polling for new selections.
 
 Here's how it's intended to be used:
 
-    while true; do
-        clipnotify  # When clipnotify exists, a new selection event was detected.
-        [do something with the selection]
+    while clipnotify; do
+        [an event happened, do something with the selection]
     done
 
 clipnotify doesn't try to print anything about the contents of the selection,
