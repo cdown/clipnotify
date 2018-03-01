@@ -16,3 +16,9 @@ it just exits when it changes. This is intentional -- X11's selection API is
 verging on the insane, and there are plenty of others who have already lost
 their sanity to bring us xclip/xsel/etc. Use one of those tools to complement
 clipnotify.
+
+## Options
+
+Option | Description
+--- | ---
+`-P`, `--disable-primary` | Do not notify on changes to PRIMARY (only to changes on clipboard)

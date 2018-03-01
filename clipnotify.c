@@ -3,12 +3,29 @@
 #include <X11/extensions/Xfixes.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int main(void) {
+int main(int argc, char **argv) {
     Display *disp;
     Window root;
     Atom clip;
     XEvent evt;
+
+    // Parse and validate flags
+    int disablePrimary = 0;
+    for (int i = 1; i < argc; i++) {
+        int disPrimary = (
+            strcmp(argv[i], "-P") == 0 || 
+            strcmp(argv[i], "--disable-primary") == 0
+        );
+
+        if (disPrimary) {
+            disablePrimary = 1;
+        } else {
+            fprintf(stderr, "Unrecognized option: %s\n", argv[i]);
+            exit(1);
+        }
+    }
 
     disp = XOpenDisplay(NULL);
     if (!disp) {
@@ -17,10 +34,12 @@ int main(void) {
     }
 
     root = DefaultRootWindow(disp);
-
     clip = XInternAtom(disp, "CLIPBOARD", False);
 
-    XFixesSelectSelectionInput(disp, root, XA_PRIMARY, XFixesSetSelectionOwnerNotifyMask);
+    if (!disablePrimary) {
+        XFixesSelectSelectionInput(disp, root, XA_PRIMARY, XFixesSetSelectionOwnerNotifyMask);
+    }
+
     XFixesSelectSelectionInput(disp, root, clip, XFixesSetSelectionOwnerNotifyMask);
 
     XNextEvent(disp, &evt);
