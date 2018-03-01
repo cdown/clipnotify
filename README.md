@@ -21,4 +21,4 @@ clipnotify.
 
 Option | Description
 --- | ---
-`-P`, `--disable-primary` | Do not notify on changes to PRIMARY (only to changes on clipboard)
+`-P`, `--disable-primary` | Do not notify on changes to PRIMARY (only on changes to clipboard)
