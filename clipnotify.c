@@ -4,22 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __OpenBSD__
-#define MAYBE_PLEDGE(p, ep) pledge(p, ep)
-#else
-#define MAYBE_PLEDGE(p, ep) 0
-#endif /* __OpenBSD__ */
-
 int main(void) {
     Display *disp;
     Window root;
     Atom clip;
     XEvent evt;
-
-    if (MAYBE_PLEDGE("stdio rpath", NULL) < 0) {
-        perror("pledge");
-        exit(2);
-    }
 
     disp = XOpenDisplay(NULL);
     if (!disp) {
