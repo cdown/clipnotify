@@ -14,7 +14,7 @@ int main(void) {
     disp = XOpenDisplay(NULL);
     if (!disp) {
         fprintf(stderr, "Can't open X display\n");
-        exit(1);
+        return EXIT_FAILURE;
     }
 
     root = DefaultRootWindow(disp);
@@ -26,4 +26,6 @@ int main(void) {
 
     XNextEvent(disp, &evt);
     XCloseDisplay(disp);
+
+    return EXIT_SUCCESS;
 }
