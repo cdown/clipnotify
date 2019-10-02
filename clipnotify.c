@@ -6,26 +6,22 @@
 #include <X11/extensions/Xfixes.h>
 
 int main(void) {
-    Display *disp;
-    Window root;
-    Atom clip;
-    XEvent evt;
+    Display *display = XOpenDisplay(NULL);
 
-    disp = XOpenDisplay(NULL);
-    if (!disp) {
+    if (!display) {
         fprintf(stderr, "Can't open X display\n");
         return EXIT_FAILURE;
     }
 
-    root = DefaultRootWindow(disp);
+    XEvent event;
+    Window root         = DefaultRootWindow(display);
+    Atom   xa_clipboard = XInternAtom(display, "CLIPBOARD", False);
 
-    clip = XInternAtom(disp, "CLIPBOARD", False);
+    XFixesSelectSelectionInput(display, root, XA_PRIMARY,   XFixesSetSelectionOwnerNotifyMask);
+    XFixesSelectSelectionInput(display, root, xa_clipboard, XFixesSetSelectionOwnerNotifyMask);
 
-    XFixesSelectSelectionInput(disp, root, XA_PRIMARY, XFixesSetSelectionOwnerNotifyMask);
-    XFixesSelectSelectionInput(disp, root, clip, XFixesSetSelectionOwnerNotifyMask);
-
-    XNextEvent(disp, &evt);
-    XCloseDisplay(disp);
+    XNextEvent(display, &event);
+    XCloseDisplay(display);
 
     return EXIT_SUCCESS;
 }
