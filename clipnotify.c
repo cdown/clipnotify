@@ -10,7 +10,8 @@
 static enum selections {
     NONE                = 0,
     SELECTION_CLIPBOARD = (1 << 0),
-    SELECTION_PRIMARY   = (1 << 1)
+    SELECTION_PRIMARY   = (1 << 1),
+    SELECTION_SECONDARY = (1 << 2)
 } selections = NONE;
 
 int main(int argc, char *argv[]) {
@@ -18,6 +19,7 @@ int main(int argc, char *argv[]) {
 
     static const char SEL_OPT_CLIPBOARD[] = "clipboard";
     static const char SEL_OPT_PRIMARY[]   = "primary";
+    static const char SEL_OPT_SECONDARY[] = "secondary";
 
     static const char SEL_OPT_SEPARATOR[] = ",";
 
@@ -36,6 +38,8 @@ int main(int argc, char *argv[]) {
                     selections |= SELECTION_CLIPBOARD;
                 } else if (strcmp(token, SEL_OPT_PRIMARY) == 0) {
                     selections |= SELECTION_PRIMARY;
+                } else if (strcmp(token, SEL_OPT_SECONDARY) == 0) {
+                    selections |= SELECTION_SECONDARY;
                 } else {
                     fprintf(stderr, "Unrecognized selection '%s'. Available selections: clipboard, primary.\n", token);
                     return EXIT_FAILURE;
@@ -68,6 +72,8 @@ int main(int argc, char *argv[]) {
         XFixesSelectSelectionInput(display, root, xa_clipboard, XFixesSetSelectionOwnerNotifyMask);
     if (selections & SELECTION_PRIMARY)
         XFixesSelectSelectionInput(display, root, XA_PRIMARY,   XFixesSetSelectionOwnerNotifyMask);
+    if (selections & SELECTION_SECONDARY)
+        XFixesSelectSelectionInput(display, root, XA_SECONDARY, XFixesSetSelectionOwnerNotifyMask);
 
     XNextEvent(display, &event);
     XCloseDisplay(display);
