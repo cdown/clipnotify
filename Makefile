@@ -1,4 +1,4 @@
-x11_bsd_flags = -I/usr/X11R6/include -L/usr/X11R6/lib
+x11_flags = $(shell pkg-config --cflags --libs x11)
 
 all:
-	${CC} ${CFLAGS} ${LDFLAGS} clipnotify.c -o clipnotify $(x11_bsd_flags) -lX11 -lXfixes
+	${CC} ${CFLAGS} ${LDFLAGS} clipnotify.c -o clipnotify $(x11_flags) -lXfixes
