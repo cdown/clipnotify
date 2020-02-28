@@ -16,3 +16,7 @@ it just exits when it changes. This is intentional -- X11's selection API is
 verging on the insane, and there are plenty of others who have already lost
 their sanity to bring us xclip/xsel/etc. Use one of those tools to complement
 clipnotify.
+
+## Dependencies
+
+This depends on "Xfixes.h" file, which needs to be installed separately. On Debian-derived distributions, this is located in the package `libxfixes-dev`.
