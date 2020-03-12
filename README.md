@@ -16,3 +16,20 @@ it just exits when it changes. This is intentional -- X11's selection API is
 verging on the insane, and there are plenty of others who have already lost
 their sanity to bring us xclip/xsel/etc. Use one of those tools to complement
 clipnotify.
+
+## Installation via Packages
+
+On Arch Linux, you can install the `clipnotify` package.
+
+## Manual installation
+
+First you need to make sure "XFixes.h" is already installed. On Debian-derived systems,
+this is located in the package `libxfixes-dev`.
+
+
+    git clone https://github.com/cdown/clipnotify.git
+    cd clipnotify
+    make
+    sudo make install
+
+The final step will install the `clipnotify` binary at `/usr/bin/clipnotify`.
