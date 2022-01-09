@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
     XFixesSelectSelectionInput(disp, root, clip, XFixesSetSelectionOwnerNotifyMask);
 
     XNextEvent(disp, &evt);
-    if (argc) {
+    if (argc > 1) {
         ////////////////////////////
 
         //~ while (1) {
