@@ -30,6 +30,9 @@ int main(int argc, char **argv) {
     Atom clip;
     XEvent evt;
 
+    if (argc > 2)
+        fprintf(stderr, "Note: only first argument will be used - '%s'\n", argv[1]);
+
     disp = XOpenDisplay(NULL);
     if (!disp) {
         fprintf(stderr, "Can't open X display\n");
