@@ -13,9 +13,12 @@ static enum selections {
     SELECTION_SECONDARY = (1 << 2)
 } selections = NONE;
 
+static int loop;
+
 int main(int argc, char *argv[]) {
     static const char *usage =
-        "%s: Notify on clipboard events.\n\n"
+        "%s: Notify by exiting on clipboard events.\n\n"
+        "  -l    Instead of exiting, print a newline when a new selection is available.\n"
         "  -s    The selection to use. Available selections:\n"
         "        clipboard, primary, secondary\n"
         "        The default is to monitor clipboard and primary.\n";
@@ -25,11 +28,14 @@ int main(int argc, char *argv[]) {
     XEvent evt;
     int opt;
 
-    while ((opt = getopt(argc, argv, "hs:")) != -1) {
+    while ((opt = getopt(argc, argv, "hs:l")) != -1) {
         switch (opt) {
             case 'h':
                 printf(usage, argv[0]);
                 return EXIT_SUCCESS;
+            case 'l':
+                loop = 1;
+                break;
             case 's': {
                 char *token = strtok(optarg, ",");
                 while (token != NULL) {
@@ -77,6 +83,14 @@ int main(int argc, char *argv[]) {
         XFixesSelectSelectionInput(disp, root, XA_SECONDARY,
                                    XFixesSetSelectionOwnerNotifyMask);
 
-    XNextEvent(disp, &evt);
+    if (loop) {
+        (void)setvbuf(stdout, NULL, _IONBF, 0);
+        do {
+            XNextEvent(disp, &evt);
+            printf("\n");
+        } while (1);
+    } else {
+        XNextEvent(disp, &evt);
+    }
     XCloseDisplay(disp);
 }
