@@ -7,6 +7,12 @@ avoid polling for new selections.
 
 Here's how it's intended to be used:
 
+    while read; do
+        [an event happened, do something with the selection]
+    done < <(clipnotify -l)
+
+Or:
+
     while clipnotify; do
         [an event happened, do something with the selection]
     done
